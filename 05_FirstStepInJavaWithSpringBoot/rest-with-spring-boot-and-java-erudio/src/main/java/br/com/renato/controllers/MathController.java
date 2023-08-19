@@ -18,33 +18,30 @@ public class MathController {
     @Autowired
     public static final MathService mathService = new MathService();
 
-    @RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method = RequestMethod.GET)
-    public Double sum(@PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo) throws Exception {
-        return mathService.sum(numberTwo, numberTwo);
-    }
-
-    @RequestMapping(value = "/subtraction/{numberOne}/{numberTwo}", method = RequestMethod.GET)
-    public Double subtraction(@PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo) throws Exception {
-        return mathService.substraction(numberTwo, numberTwo);
-    }
-
-    @RequestMapping(value = "/multiply/{numberOne}/{numberTwo}", method = RequestMethod.GET)
-    public Double multiply(@PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo) throws Exception {
-        return mathService.multiply(numberTwo, numberTwo);
-    }
-
-    @RequestMapping(value = "/divide/{numberOne}/{numberTwo}", method = RequestMethod.GET)
-    public Double divide(@PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo) throws Exception {
-        return mathService.divide(numberTwo, numberTwo);
+    @RequestMapping(value = "/{operator}/{numberOne}")
+    public Double mathOperation(@PathVariable("operator") String operator, @PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo) throws Exception {
+        switch (operator) {
+            case "sum" -> {
+                return mathService.sum(numberOne, numberTwo);
+            }
+            case "subtraction" -> {
+                return mathService.subtraction(numberOne, numberTwo);
+            }
+            case "divide" -> {
+                return mathService.divide(numberOne, numberTwo);
+            }
+            case "multiply" -> {
+                return mathService.multiply(numberOne, numberTwo);
+            }
+            case "sqrt" -> {
+                return mathService.squareRoot(numberOne);
+            }
+        }
+        return 0D;
     }
 
     @RequestMapping(value = "/average/{numberOne}/{numberTwo}/{numberThree}", method = RequestMethod.GET)
     public Double average(@PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo, @PathVariable("numberThree") String numberThree) throws Exception {
-        return mathService.average(numberTwo, numberTwo, numberThree);
-    }
-
-    @RequestMapping(value = "/sqrt/{number}", method = RequestMethod.GET)
-    public Double squareRoot(@PathVariable("number") String number) throws Exception {
-        return mathService.squareRoot(number);
+        return mathService.average(numberOne, numberTwo, numberThree);
     }
 }

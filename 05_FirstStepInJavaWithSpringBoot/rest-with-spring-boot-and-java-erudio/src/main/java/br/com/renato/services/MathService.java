@@ -14,7 +14,7 @@ public class MathService {
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
 
-    public double substraction(String numberOne, String numberTwo) {
+    public double subtraction(String numberOne, String numberTwo) {
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value!");
         return convertToDouble(numberOne) - convertToDouble(numberTwo);
     }
