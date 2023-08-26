@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MathController {
 
-//    private static AtomicLong counter = new AtomicLong();
-
     private final SimpleMath simpleMath = new SimpleMath();
 
     @RequestMapping(value = "/{operator}/{numberOne}/{numberTwo}")
@@ -37,15 +35,14 @@ public class MathController {
         return 0D;
     }
 
-    @RequestMapping(value = "/average/{numberOne}/{numberTwo}/{numberThree}", method = RequestMethod.GET)
+    @RequestMapping(value = "/average/{numberOne}/{numberTwo}/{numberThree}")
     public Double average(@PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo, @PathVariable("numberThree") String numberThree) throws Exception {
         if (!NumberConverter.isNumeric(numberOne) || !NumberConverter.isNumeric(numberTwo) || !NumberConverter.isNumeric(numberThree))
             throw new UnsupportedMathOperationException("Please set a numeric value!");
         return simpleMath.average(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo), NumberConverter.convertToDouble(numberThree));
     }
 
-    @RequestMapping(value = "/sqrt/{numberOne}", method = RequestMethod.GET)
-
+    @RequestMapping(value = "/sqrt/{numberOne}")
     public Double squareRoot(@PathVariable("numberOne") String numberOne) throws Exception {
         if (!NumberConverter.isNumeric(numberOne))
             throw new UnsupportedMathOperationException("Please set a numeric value!");

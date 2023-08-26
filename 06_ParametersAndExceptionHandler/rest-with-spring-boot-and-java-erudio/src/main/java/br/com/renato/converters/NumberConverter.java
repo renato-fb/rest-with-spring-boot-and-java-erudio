@@ -17,5 +17,4 @@ public class NumberConverter implements Serializable {
         String number = strNumber.replaceAll(",", ".");
         return isNumeric(number) ? Double.parseDouble(number) : 0D;
     }
-
 }
