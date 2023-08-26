@@ -10,4 +10,5 @@ public class UnsupportedMathOperationException extends RuntimeException {
     public UnsupportedMathOperationException(String ex) {
         super(ex);
     }
+
 }
