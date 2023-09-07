@@ -1,4 +1,4 @@
-package br.com.erudio.controllers;
+package br.com.renato.controllers;
 
 import br.com.renato.data.vo.v1.PersonVO;
 import br.com.renato.services.PersonServices;
