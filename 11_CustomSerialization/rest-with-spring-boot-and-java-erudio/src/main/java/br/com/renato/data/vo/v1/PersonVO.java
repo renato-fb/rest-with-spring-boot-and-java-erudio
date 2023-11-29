@@ -7,7 +7,6 @@ import java.util.Objects;
 public class PersonVO implements Serializable {
 
     private Long id;
-
     private String firstName;
     private String lastName;
     private String address;
