@@ -3,6 +3,7 @@ package br.com.renato.services;
 import java.util.List;
 import java.util.logging.Logger;
 
+import br.com.renato.controller.PersonController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,9 @@ import br.com.renato.model.Person;
 import br.com.renato.data.vo.v1.PersonVO;
 import br.com.renato.exception.ResourceNotFoundException;
 import br.com.renato.repository.PersonRepository;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Service
 public class PersonServices {
@@ -24,7 +28,15 @@ public class PersonServices {
 
 		logger.info("Finding all people!");
 
-		return DozerConverter.parseListObjects(repository.findAll(), PersonVO.class);
+		List<PersonVO> personVO = DozerConverter.parseListObjects(repository.findAll(), PersonVO.class);
+
+		personVO
+				.forEach(p -> p.add(
+								linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()
+						)
+				);
+
+		return personVO;
 	}
 
 	public PersonVO findById(Long id) {
@@ -33,7 +45,11 @@ public class PersonServices {
 
 		var entity = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
-		return DozerConverter.parseObject(entity, PersonVO.class);
+
+		PersonVO personVO = DozerConverter.parseObject(entity, PersonVO.class);
+		personVO.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+		return personVO;
+
 	}
 
 	public PersonVO create(PersonVO person) {
@@ -41,7 +57,10 @@ public class PersonServices {
 		logger.info("Creating one person!");
 
 		var entity = DozerConverter.parseObject(person, Person.class);
-        return DozerConverter.parseObject(repository.save(entity), PersonVO.class);
+
+        PersonVO personVO =  DozerConverter.parseObject(repository.save(entity), PersonVO.class);
+		personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
+		return personVO;
 	}
 
 	public PersonVO update(PersonVO person) {
@@ -56,7 +75,11 @@ public class PersonServices {
 		entity.setAddress(person.getAddress());
 		entity.setGender(person.getGender());
 
-        return DozerConverter.parseObject(repository.save(entity), PersonVO.class);
+        PersonVO personVO =  DozerConverter.parseObject(repository.save(entity), PersonVO.class);
+		personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
+		return personVO;
+
+
 	}	
 	
 	public void delete(Long id) {

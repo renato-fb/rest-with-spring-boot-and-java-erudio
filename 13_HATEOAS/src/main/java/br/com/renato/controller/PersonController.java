@@ -30,18 +30,12 @@ public class PersonController {
     @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
     public List<PersonVO> findAll() {
         List<PersonVO> persons = service.findAll();
-        persons
-                .forEach(p -> p.add(
-                                linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()
-                        )
-                );
         return persons;
     }
 
     @GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/x-yaml"})
     public PersonVO findById(@PathVariable("id") Long id) {
         PersonVO personVO = service.findById(id);
-        personVO.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
         return personVO;
     }
 
@@ -49,7 +43,6 @@ public class PersonController {
             consumes = {"application/json", "application/xml", "application/x-yaml"})
     public PersonVO create(@RequestBody PersonVO person) {
         PersonVO personVO = service.create(person);
-        personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
         return personVO;
     }
 
@@ -57,7 +50,6 @@ public class PersonController {
             consumes = {"application/json", "application/xml", "application/x-yaml"})
     public PersonVO update(@RequestBody PersonVO person) {
         PersonVO personVO = service.update(person);
-        personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
         return personVO;
     }
 
