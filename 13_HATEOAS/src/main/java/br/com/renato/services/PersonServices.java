@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import br.com.renato.controller.PersonController;
+import br.com.renato.exception.RequiredObjectIsNullException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,10 +55,9 @@ public class PersonServices {
 
 	public PersonVO create(PersonVO person) {
 
+		if (person == null) throw new RequiredObjectIsNullException();
 		logger.info("Creating one person!");
-
 		var entity = DozerConverter.parseObject(person, Person.class);
-
         PersonVO personVO =  DozerConverter.parseObject(repository.save(entity), PersonVO.class);
 		personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
 		return personVO;
@@ -65,11 +65,13 @@ public class PersonServices {
 
 	public PersonVO update(PersonVO person) {
 
+		if (person == null) throw new RequiredObjectIsNullException();
+
 		logger.info("Updating one person!");
 
 		var entity = repository.findById(person.getKey())
 				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
-		
+
 		entity.setFirstName(person.getFirstName());
 		entity.setLastName(person.getLastName());
 		entity.setAddress(person.getAddress());
