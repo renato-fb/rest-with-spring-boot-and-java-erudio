@@ -1,7 +1,7 @@
 package br.com.renato.controller;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 
@@ -29,28 +29,24 @@ public class PersonController {
 
     @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
     public List<PersonVO> findAll() {
-        List<PersonVO> persons = service.findAll();
-        return persons;
+        return service.findAll();
     }
 
     @GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/x-yaml"})
     public PersonVO findById(@PathVariable("id") Long id) {
-        PersonVO personVO = service.findById(id);
-        return personVO;
+        return service.findById(id);
     }
 
     @PostMapping(produces = {"application/json", "application/xml", "application/x-yaml"},
             consumes = {"application/json", "application/xml", "application/x-yaml"})
     public PersonVO create(@RequestBody PersonVO person) {
-        PersonVO personVO = service.create(person);
-        return personVO;
+        return service.create(person);
     }
 
     @PutMapping(produces = {"application/json", "application/xml", "application/x-yaml"},
             consumes = {"application/json", "application/xml", "application/x-yaml"})
     public PersonVO update(@RequestBody PersonVO person) {
-        PersonVO personVO = service.update(person);
-        return personVO;
+        return service.update(person);
     }
 
     @DeleteMapping("/{id}")

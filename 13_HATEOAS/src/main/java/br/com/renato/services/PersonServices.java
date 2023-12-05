@@ -14,8 +14,8 @@ import br.com.renato.data.vo.v1.PersonVO;
 import br.com.renato.exception.ResourceNotFoundException;
 import br.com.renato.repository.PersonRepository;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonServices {
