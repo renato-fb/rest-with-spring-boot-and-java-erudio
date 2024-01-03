@@ -10,7 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan
 public class Startup {
 	public static void main(String[] args) {
-		System.out.println("SKLDSADJKLAJKLD");
 		SpringApplication.run(Startup.class, args);
 	}
 }

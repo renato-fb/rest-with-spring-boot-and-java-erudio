@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rest_with_spring_boot_erudio?useTimezone=true&serverTimezone=UTC
+    username: root
+    password: 1234
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+  flyway:
+    url: jdbc:mysql://localhost:3306/
+    schemas: rest_with_spring_boot_erudio
+    user: root
+    password: 1234
+    baselineOnMigrate: true
+
+  jackson:
+    default-property-inclusion: non_null
+
+spring-doc:
+  pathsToMatch: /api/**/v1/**
+  swagger-ui:
+    use-root-path: true
